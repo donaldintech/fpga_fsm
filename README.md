@@ -1,9 +1,20 @@
 # Implementing a Finite State Machine(FSM) on an FPGA board.
 ## Background Info ##
 
+An FSM, from its definition is an abstract model with finite states; that can be implemented using real circuits. It can be used to simulate sequential logic and some computer programs <br/>
+At the highest level, a FSM is represented by state diagram which allows us to easily visualize all the states, transitions and output outcomes.
 
+![image](https://github.com/user-attachments/assets/8d2494b8-5c55-4d70-b6dd-17206ea56c5c)
 
+The next step would then be to use a HDL which basically dictates the behavior of the FSM. 
 
+-There are 2 types of FSM;<br/>
+**Moore FSM:** The output is solely dependent on the current state. It does not change directly with the input but rather with state transitions.
+
+**Mealy FSM:** The output depends on both the current state and the input. This allows for more immediate reactions to inputs but can lead to more complex designs.
+
+-For our project, we have 4 states each represented by 4 LEDs as outputs.<br/>
+-Our goal is to implement the FSM which we could use in our future projects like **Interfacing an LCD to the FPGA**
 
 ## Requirements & Installation ##
 
@@ -187,7 +198,6 @@ process (clk, rst_debounce)
 
 **•	LED Output**
 
--
 ```
  process(State)
     begin
@@ -221,8 +231,7 @@ process (clk, rst_debounce)
     end process;
 ```
 
--When the reset is asserted, all signals & segments are turned off but during the rising edge of the cock cycle; the period_count signal (which represents number of clock cycles and is computed from 50 MHz clock and 0.5 mS period)  increments until 25000, meaning it keeps displaying for that long.<br/>
--Otherwise the period is reset to 0 and thus the display_sel signal determines the segment to display using a modulo operator; whose result is utilized in the case statement.<br/><br/>
+<br/><br/>
 -FIND THE WHOLE CODE BELOW: 
 
 ```
@@ -386,38 +395,14 @@ end architecture;
 
 
 
+## SIMULATION ##
+-If you'd like to simulate your VHDL to observe the functionality before deploying into your board; then follow the steps below:  
 
 
 ## Preparing the Code ##
 
--Click on the SIMULATE icon to ensure no errors exist in the code and monitor the following section of the software window, which shows the progress.
+-Again the steps for preparing your code can be found in a similar project in the repo: 
+[fpga segment display](https://github.com/donaldintech/fpga_segment_display) </br>
+-Once you're satisfied with your code & simulation , go ahead to program your code and emjoy the outcome.
 
-![image](https://github.com/user-attachments/assets/45c9c377-3b10-4117-9238-4e086b12e27b)
-
-
--If everything is green, click on the PIN PLANNER icon to specify FPGA pins. <br/>
-A new window appears where you can also specify the Voltage levels alongside the location of the pins; all with the help of the User Manual or Datasheet.
-
-![image](https://github.com/user-attachments/assets/28d17c3a-8ece-471a-a189-6dd31f523092)
-
-
--SIMULATE one more time to ensure the pins are allocated.<br/>
--The final section is to program the FPGA ; Click on the PROGRAMMER icon which opens a new window
-
-![image](https://github.com/user-attachments/assets/a84de246-2dbc-4779-82cd-3ceaf1effa62)
-
-
--You might need to setup your hardware if it does not show up. Some FPGA boards use an external USB blaster but ours is embedded-so if you have any problem here you need to update drivers in the Device Manager automatically or manually by navigating to the location of the downloaded Altera package.
-
- ![image](https://github.com/user-attachments/assets/ae85f031-d358-4e6d-a6f3-11023d5ac519)
-
-
--If everything is okay, click on ADD FILE , then click on the .sof file which has a volatile memory, therefore disconnecting the board loses the program; otherwise go for the .pof file.
-
--Click on START  and you should see a green progress bar
-
- ![image](https://github.com/user-attachments/assets/12e4cd6e-1cf4-430b-9b6a-bb800f9ba2e5)
-
-
--The board should now behave as programmed.
 
